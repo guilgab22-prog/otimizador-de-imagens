@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otimizador de Imagens | Reduza fotos online e grátis</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4F46E5">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container fade-in">
+        <header>
+            <div class="header-top">
+                <h1>Otimizador de Imagens</h1>
+                <button id="theme-toggle" class="btn-icon" title="Alternar Tema">🌙</button>
+            </div>
+            <div class="privacy-badge">🔒 Processamento 100% Local (Funciona Offline)</div>
+            
+            <div id="stats-dashboard" class="stats-dashboard hidden">
+                <div class="stat-item">
+                    <span class="stat-label">Total Poupado</span>
+                    <span class="stat-value text-success" id="total-saved-value">0 MB</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="upload-area" id="upload-area">
+                <input type="file" id="image-input" accept="image/jpeg, image/png, image/webp" multiple hidden>
+                <button class="btn-primary">Escolher Imagens</button>
+                <p>Arraste, <strong>cole (Ctrl+V)</strong> ou clique</p>
+            </div>
+
+            <div id="workspace" class="hidden">
+                <div class="controls-group global-controls">
+                    <div class="controls">
+                        <label for="quality-slider">Qualidade Padrão: <span id="quality-value">80%</span></label>
+                        <input type="range" id="quality-slider" min="10" max="100" value="80">
+                    </div>
+                    <div class="controls">
+                        <label for="size-select">Resolução Máxima:</label>
+                        <select id="size-select">
+                            <option value="original">Manter Original</option>
+                            <option value="1920">Full HD (Máx 1920px)</option>
+                            <option value="1080">Web (Máx 1080px)</option>
+                        </select>
+                    </div>
+                    <div class="controls">
+                        <label for="format-select">Formato:</label>
+                        <select id="format-select">
+                            <option value="auto">✨ Auto (Sempre Mais Leve)</option>
+                            <option value="image/webp">WEBP</option>
+                            <option value="image/jpeg">JPEG</option>
+                            <option value="image/png">PNG</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="results-grid" class="results-grid">
+                    </div>
+
+                <div class="button-group" style="margin-top: 25px; display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; gap: 10px;">
+                        <button id="download-zip-btn" class="btn-success">📦 Baixar .ZIP</button>
+                        <button id="download-pdf-btn" class="btn-danger">📄 Gerar PDF</button>
+                    </div>
+                    <button id="reset-btn" class="btn-outline">Limpar Tudo / Subir Novas</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('App Instalável (PWA) ativado com sucesso!'))
+                    .catch(err => console.log('Erro no PWA:', err));
+            });
+        }
+    </script>
+</body>
+</html>
